@@ -1,4 +1,4 @@
-use Concessionaria
+create database Concessionaria
 go
 
 drop table usuario
@@ -184,3 +184,76 @@ constraint fkId_professor8 foreign key (Id_professor)
 references professor (Id_professor),
 constraint ck_tipo check (tipo like 'Resposta Aberta' or tipo like 'Teste')
 )
+
+create table AtividadeVinculada
+(
+Id_AtividadeVinculada smallint identity (1,1),
+Id_Atividade smallint unique,
+Id_Professor smallint,
+Id_disciplinaOfertada smallint unique,
+rotulo varchar(10) unique,
+Status_AtividadeVinculada varchar (50),
+DtInicioRespostas date,
+DtFimRespostas date 
+constraint pkId_AtividadeVinculada primary key (Id_AtividadeVinculada),
+Constraint fkId_atividade foreign key (Id_atividade)
+references atividade (Id_atividade),
+constraint fkId_professor foreign key (Id_professor)
+references professor (Id_professor),
+constraint fkId_disciplinaOfertada foreign key (Id_disciplinaOfertada)
+references DisciplinaOfertada (Id_discOfertada),
+constraint ck_Status_Atividade check (Status_AtividadeVinculada in ('Disponibilizada', 'Aberta', 'Fechada', 'Encerrada', 'Prorrogada'))
+)
+
+create table entrega
+(
+Id_Entrega smallint identity (1,1),
+Id_Aluno smallint,
+Id_AtividadeVinculada smallint,
+titulo varchar (20),
+resposta varchar (100),
+DtEntrega date constraint df_DtEntrega default CURRENT_TIMESTAMP,
+status_entrega varchar (9) constraint dfStatus default ('Entregue'),
+Id_professor smallint,
+nota decimal (2,2),
+DtAvaliação date,
+Obs varchar (100)
+constraint pkId_entrega primary key (Id_entrega),
+constraint fkId_Aluno foreign key (Id_Aluno)
+references aluno (Id_Aluno),
+constraint fkId_AtividadeVinculada foreign key (Id_AtividadeVinculada)
+references AtividadeVinculada (Id_AtividadeVinculada),
+constraint fkId_professor foreign key (Id_professor)
+references professor (Id_professor),
+constraint ckStatus_Entrega check (Status_entrega in ('Entregue', 'corrigido')),
+constraint CkNota check (nota >=0.0 and nota <=10.0)
+)
+
+create table mensagem
+(
+Id_mensagem smallint identity (1,1),
+Id_aluno smallint,
+Id_professor smallint,
+Assunto varchar (50),
+referencia varchar (50),
+conteudo varchar (50),
+Status_mensagem varchar (10) constraint ,
+DtEnvio date,
+DtReposta date,
+Resposta varchar (50),
+constraint PkId_mensagem primary key (Id_mensagem),
+constraint fkId_aluno foreign key (Id_aluno)
+references aluno (Id_aluno),
+constraint fkId_professor foreign key (Id_professor)
+references professor (Id_professor),
+constraint ckStatus_mensagem check (Status_mensagem in ('Enviado', 'Lido', 'Respondido'))
+)
+
+
+
+
+
+
+
+
+
