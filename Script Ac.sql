@@ -1,3 +1,9 @@
+-- Eduardo Vinicius Rodrigues Lima, 1900992
+-- Leonardo Buzzo, 1900861
+-- Davi Hideo Santa Rita Uemura, 1900814
+-- Lucas Oliveira Cristovam de Souza, 1900824
+-- Heitor Leal de Souza, 1900576
+
 use Concessionaria
 
 create table usuario
@@ -186,7 +192,7 @@ create table entrega
 Id_Entrega smallint identity (1,1),
 Id_Aluno smallint,
 Id_AtividadeVinculada smallint,
-titulo varchar (20),
+titulo varchar (20),C
 resposta varchar (100),
 DtEntrega date constraint df_DtEntrega default CURRENT_TIMESTAMP,
 status_entrega varchar (9) constraint dfStatus default ('Entregue'),
@@ -227,68 +233,3 @@ constraint fkId_professor_mensagem foreign key (Id_professor)
 references professor (Id_professor),
 constraint ckStatus_mensagem check (Status_mensagem in ('Enviado', 'Lido', 'Respondido'))
 )
-
-
-insert into usuario (Login_usuario, senha) values ('Eduardo', 'dudu')
- 
-
- insert into coordenador(Id_usuario, nome, email, celular)
- values (1, 'Eduardo', 'dududud@dud', '938293')
-
-insert into aluno (id_usuario, nome, email, celular, ra, foto)
-values (1, 'dudu', '@leo', '2989', '1900992', 'url.thjink.okd')
-
-
-insert into professor(id_usuario, email, celular, apelido)
-values (1, '@leo', '2389', 'leozito')
-
-
-insert into disciplina (nome, planodeensino, cargahoraria, competencias, habilidades, ementa, ConteudoProgramatico,
-						bibliografiabasica, BibliografiaComplementar, PercentualPratico, PercentualTeorico)
-			values	   ('Davi Hideo', 'Aprendeer como Dormir', 40, 'Entender', 'Programacao', 'Não sei o que é ementa',
-						'Python 2x semana', 'Entender Einstein',  'Complementar', 80, 70)
-
-
-insert into disciplinaofertada (Id_coordenador, DtInicioMatricula, DtFimMatricula, Id_Disciplina_Ofertada, Id_curso, ano, semestre,turma,
-								Id_professor, metodologia, recursos, CriterioAvaliacao, PlanoDeAulas)
-					values	   (1, getdate(), getdate(), 1, 1, 2019, 2, 'a', 1, 'Aprender', 'Aprender', 'Aprender', 'Plano de Aulas')
-
-
-
-insert into Curso(nome) values ('Informática')
-
-alter table DisciplinaOfertada add constraint fk_Idcurso foreign key (Id_curso)
-references curso (Id)
-
-
-insert into SolicitacaoMatricula(id_aluno2, id_disciplina_ofertada)
-						values (1, 1)
-
-
-insert into atividade (titulo, descricao, conteudo, tipo, extras, Id_professor)
-	values ('Ac 04', 'Entregar ate 23h00', 'Responda o questionario', 'Teste' , 'Responder ate 17h + 20$', 1)
-
-
-insert into AtividadeVinculada (id_atividade, id_professor, id_disciplinaOfertada, rotulo, status_atividadeVinculada, dtInicioRespostas, DtFimRespostas)
-						values (1, 1, 1, 'AC4', 'Disponibilizada', GETDATE(), GETDATE())
-
-
-insert into entrega (Id_Aluno, Id_AtividadeVinculada, Id_professor, titulo, resposta, DtEntrega, DtAvaliação, status_entrega, nota, obs)
-values (1,1,1,'descrição','teste.com.br', GETDATE(), GETDATE(), 'Entregue', '8.58', 'corrigido')
-
-
-insert into mensagem (Id_aluno_mensagem,Id_professor, referencia,Status_mensagem,DtEnvio,DtReposta,Resposta)
-values(1,1,'SQL,AC04,Correção','Enviado',GETDATE(), '12/09/2020', 'Corrigido')
-
-select*from usuario
-select*from aluno
-select*from professor
-select*from coordenador
-select*from Curso
-select*from AtividadeVinculada
-select*from atividade
-select*from disciplina
-select*from DisciplinaOfertada
-select*from entrega
-select*from mensagem
-select*from SolicitacaoMatricula
