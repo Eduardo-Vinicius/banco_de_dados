@@ -58,7 +58,7 @@ select orderid as 'Núm. do Pedido', orderdate as 'Data do Pedido', contactname a
 
 	   where employ.country = 'USA' and (ship.companyname = 'Shipper ETYNR' or ship.companyname = 'Shipper GVSUA')
 
-	   order by orderid desc
+	   order by orderid
 
 --5 
 
@@ -68,7 +68,7 @@ select productname as 'nome do produto', categoryname as 'nome da categoria', un
 	join Production.Categories as c
 	on p.categoryid = c.categoryid
 where categoryname = 'BEVERAGES' AND unitprice < 30
-order by unitprice
+order by unitprice desc
 
 
 -- 6
